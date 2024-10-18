@@ -1,4 +1,6 @@
 #Programa para Consulta de CPF com Ruby
+#gem install cpf_cnpj
+
 require "cpf_cnpj"
 
 puts'Gostaríamos de saber se seu CPF é válido. Gentileza, digite o seu cpf'
