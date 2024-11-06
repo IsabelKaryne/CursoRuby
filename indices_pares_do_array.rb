@@ -18,32 +18,45 @@ Exemplo
   1, 2, 3, 4, 5, 6	                       
 =end
 
-loop do
-  puts 'Informe duas listas com números de mesmo tamanho'
-  puts 'Primeira lista, use espaço para separar os números'
-  lista1 = gets.split.map(&:to_i) # Lê e converte os números da primeira lista
-  puts 'Segunda lista, use espaço para separar os números'
-  lista2 = gets.split.map(&:to_i) # Lê e converte os números da segunda lista
-
+# Função que soma os índices pares de duas listas
+def soma_indices_pares(lista1, lista2)
   resultado = []
-
+  
   # Verifica se as listas têm o mesmo tamanho
-  if lista1.length == lista2.length
-    lista1.each_with_index do |elemento, index|
-      if index.even? # Verifica se o índice é par
-        resultado << (elemento + lista2[index]) # Soma os elementos
-      end
-    end
-    
-    # Exibe o resultado formatado
-    resultado_formatado = resultado.join(", ")
-    puts "Resultado: #{resultado_formatado}"
-  else 
-    puts 'A lista informada não teve o mesmo tamanho'
+  if lista1.length != lista2.length
+    puts "As listas devem ter o mesmo tamanho!"
+    return
   end
 
-  # Condição para sair do loop (exemplo)
-  puts 'Deseja continuar? (s/n)'
-  resposta = gets.chomp.downcase
-  break if resposta != 's' # Sai do loop se a resposta não for 's'
+  # Itera pelos índices das listas
+  lista1.each_with_index do |valor, index|
+    if index.even? # Verifica se o índice é par
+      resultado << (valor + lista2[index]) # Soma e adiciona ao resultado
+    end
+  end
+
+  resultado
 end
+
+# Função para obter uma lista de números inteiros do usuário
+def obter_lista
+  loop do
+    entrada = gets.chomp.split(',').map(&:strip) # Divide por vírgula e remove espaços
+    # Verifica se todos os elementos da entrada são números inteiros
+    if entrada.all? { |item| item.match?(/^\d+$/) }
+      return entrada.map(&:to_i) # Converte para inteiros e retorna a lista
+    else
+      puts "Entrada inválida! Por favor, digite apenas números inteiros."
+    end
+  end
+end
+
+# Obtém as duas listas do usuário
+lista1 = obter_lista
+lista2 = obter_lista
+
+# Chama a função e armazena o resultado
+resultado = soma_indices_pares(lista1, lista2)
+
+# Exibe o resultado
+puts resultado.join(',')
